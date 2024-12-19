@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Cooking and Baking Passion - Snake Game">
+    <meta name="author" content="Emily Langston">
+    <title>Passion - Snake Game</title>
+    <link rel="icon" type="image/x-icon" href="assets/favicon.ico" />
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css?family=Merriweather+Sans:400,700" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css?family=Merriweather:400,300,300italic,400italic,700,700italic" rel="stylesheet" type="text/css" />
+    <!-- External CSS -->
+    
+    <style>
+        body {
+            font-family: 'Merriweather', serif;
+            background-color: #f8f8f8; /* Light, neutral background */
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+        }
+
+        .navbar {
+            background-color: #4C4F56; /* Soft dark gray */
+            color: white;
+            padding: 15px 30px;
+            width: 100%;
+            text-align: center;
+        }
+
+        .navbar-brand {
+            font-size: 28px;
+            font-weight: 700;
+            letter-spacing: 1px;
+        }
+
+        .game-container {
+            text-align: center;
+            background-color: #FFFFFF; /* White background for the game container */
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            margin-top: 40px;
+            width: 440px;
+        }
+
+        #gameCanvas {
+            background-color: #2C2F36; /* Darker background for the canvas */
+            border: 2px solid #E4E7EC; /* Light border for clean contrast */
+            outline: 4px solid #1DB954; /* Subtle green outline for professional look */
+            margin-top: 20px;
+        }
+
+        .game-controls {
+            margin-top: 20px;
+        }
+
+        button {
+            background-color: #1DB954; /* Spotify-inspired green for clean, modern look */
+            border: none;
+            color: white;
+            padding: 12px 25px;
+            margin: 8px;
+            cursor: pointer;
+            border-radius: 8px;
+            font-size: 18px;
+            transition: background-color 0.3s ease-in-out;
+        }
+
+        button:hover {
+            background-color: #1A9F47; /* Slightly darker green for hover effect */
+        }
+
+        .footer {
+            margin-top: 50px;
+            text-align: center;
+            font-size: 14px;
+            color: #4C4F56; /* Matching footer text color with navbar */
+        }
+
+        .spacer {
+            height: 20px;
+        }
+
+    </style>
+</head>
+<body>
+
+    <!-- Navigation -->
+    <div class="navbar">
+        <a class="navbar-brand" href="mypassion.html">My Passion</a>
+    </div>
+
+    <div class="game-container">
+        <header>
+            <h1>Food for Thought</h1>
+            <h3>Bored while Cooking or Baking? Play a Snake Game!</h3>
+        </header>
+
+        <canvas id="gameCanvas" width="400" height="400"></canvas>
+
+        <div class="game-controls">
+            <button id="startBtn" onclick="startGame()">Start Game</button>
+            <button id="restartBtn" onclick="restartGame()" style="display: none;">Restart Game</button>
+        </div>
+    </div>
+
+    <footer class="footer">
+        <p>&copy; 2024 - Emily Langston IS 201</p>
+    </footer>
+
+    <script>
+        const canvas = document.getElementById("gameCanvas");
+        const ctx = canvas.getContext("2d");
+
+        let snake = [{x: 10, y: 10}];
+        let direction = "RIGHT";
+        let food = {x: 15, y: 15};
+        let gameInterval;
+        let gameStarted = false;
+
+        const snakeSize = 10;
+
+        // Function to start the game
+        function startGame() {
+            gameStarted = true;
+            document.getElementById("startBtn").style.display = "none";
+            document.getElementById("restartBtn").style.display = "inline-block";
+            snake = [{x: 10, y: 10}];
+            direction = "RIGHT";
+            food = {x: 15, y: 15};
+            gameInterval = setInterval(updateGame, 100);
+        }
+
+        // Function to restart the game
+        function restartGame() {
+            clearInterval(gameInterval);
+            startGame();
+        }
+
+        // Function to move the snake
+        function updateGame() {
+            if (isGameOver()) {
+                clearInterval(gameInterval);
+                alert("Game Over!");
+                document.getElementById("startBtn").style.display = "inline-block";
+                document.getElementById("restartBtn").style.display = "none";
+                return;
+            }
+
+            // Move the snake
+            let head = {...snake[0]};
+
+            if (direction === "UP") head.y -= 1;
+            if (direction === "DOWN") head.y += 1;
+            if (direction === "LEFT") head.x -= 1;
+            if (direction === "RIGHT") head.x += 1;
+
+            snake.unshift(head);
+
+            // Check if snake eats food
+            if (head.x === food.x && head.y === food.y) {
+                food = generateFood();
+            } else {
+                snake.pop();
+            }
+
+            // Clear and redraw the canvas
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            drawSnake();
+            drawFood();
+        }
+
+        // Check if the snake has hit the wall or itself
+        function isGameOver() {
+            let head = snake[0];
+
+            // Check for wall collisions
+            if (head.x < 0 || head.x >= canvas.width / snakeSize || head.y < 0 || head.y >= canvas.height / snakeSize) {
+                return true;
+            }
+
+            // Check for snake collisions with itself
+            for (let i = 1; i < snake.length; i++) {
+                if (head.x === snake[i].x && head.y === snake[i].y) {
+                    return true;
+                }
+            }
+            return false;
+        }
+
+        // Draw the snake
+        function drawSnake() {
+            snake.forEach(segment => {
+                ctx.fillStyle = "#1DB954"; /* Green for snake */
+                ctx.fillRect(segment.x * snakeSize, segment.y * snakeSize, snakeSize, snakeSize);
+            });
+        }
+
+        // Draw the food
+        function drawFood() {
+            ctx.fillStyle = "#FF6347"; /* Soft tomato red for food */
+            ctx.fillRect(food.x * snakeSize, food.y * snakeSize, snakeSize, snakeSize);
+        }
+
+        // Generate random food position
+        function generateFood() {
+            let x = Math.floor(Math.random() * (canvas.width / snakeSize));
+            let y = Math.floor(Math.random() * (canvas.height / snakeSize));
+            return {x, y};
+        }
+
+        // Change snake direction with arrow keys
+        document.addEventListener("keydown", (event) => {
+            if (event.key === "ArrowUp" && direction !== "DOWN") direction = "UP";
+            if (event.key === "ArrowDown" && direction !== "UP") direction = "DOWN";
+            if (event.key === "ArrowLeft" && direction !== "RIGHT") direction = "LEFT";
+            if (event.key === "ArrowRight" && direction !== "LEFT") direction = "RIGHT";
+
+            event.preventDefault(); // Prevent the page from moving when arrow keys are pressed
+        });
+    </script>
+</body>
+</html>

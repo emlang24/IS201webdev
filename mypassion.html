@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <title>Passion</title>
+    <link rel="icon" type="image/x-icon" href="assets/favicon.ico" />
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css?family=Merriweather+Sans:400,700" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css?family=Merriweather:400,300,300italic,400italic,700,700italic" rel="stylesheet" type="text/css" />
+    <!-- Custom External CSS -->
+    <link rel="stylesheet" href="passion_style.css">
+</head>
+<body>
+
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="container">
+            <ul class="navbar-nav">
+                <li class="nav-item"><a class="nav-link" href="index.html">Home</a></li>
+                <li class="nav-item"><a class="nav-link" href="resume.html">Resume</a></li>
+                <li class="nav-item"><a class="nav-link" href="#">My Passion</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Spacer to push content below navbar -->
+    <div class="spacer"></div>
+
+    <div class="container">
+        <header>
+            <h1>Food for Thought</h1>
+        </header>
+
+        <section class="section">
+            <h3>Where it all Started</h3>
+            <p>I discovered my passion for cooking and baking at a young age, helping my mother in the kitchen. Following in her footsteps, I developed a love for baking, drawn to its precision and my sweet tooth. As you explore this page, I hope it inspires you to find your own passion for cooking and baking.</p>
+        </section>
+
+        <section class="section">
+            <h3>My Favorites</h3>
+            <ol>
+                <li><strong>Breakfast</strong>: The most important meal of the day by far has the yummiest options.
+                    <ul>
+                        <li>Lemon Ricotta Pancakes</li>
+                        <li>Omlets</li>
+                        <li>Sour Dough French Toast</li>
+                    </ul>
+                </li>
+                <li><strong>Dessert</strong>: A few of my favorite sweet treats that always hit the spot.
+                    <ul>
+                        <li>S'mores Cookies</li>
+                        <li>Pavlovas</li>
+                        <li>Key feature or outcome #3</li>
+                    </ul>
+                </li>
+            </ol>
+        </section>
+
+<!-- Images -->
+<section class="camera-eats-first">
+    <h3>Camera Eats First</h3>
+    <p>Explore some of my favorite dishes from this past year</p>
+    <div class="image-gallery">
+        <img src="images/thumbnail_IMG_1792.jpg" alt="Power Pancakes" class="gallery-image">
+        <img src="images/thumbnail_IMG_7054.jpg" alt="Sourdough French Toast" class="gallery-image">
+        <link rel="stylesheet" href="passion_style.css">
+
+    </div>
+</section>
+
+
+        <!-- Embedded YouTube Video -->
+        <section class="section">
+            <h3>Favorite LA-Area Restaurants</h3>
+            <p>Hear more about the food in my hometown that opened a door for my passion of food.</p>
+            <iframe width="560" height="315" src="https://www.youtube.com/embed/rGrRMsVyInE" title="8 Of Our Favorite LA-Area Restaurants" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+        </section>
+
+        <section class="section" id="top">
+            <h3>Bored while Cooking or Baking? Play the Snake Game!</h3>
+            <a href="game.html" class="nav-link">Snake Game</a>
+        </section>
+
+        <footer class="footer">
+            <div class="container">
+                <p>&copy; 2024 - Emily Langston IS 201</p>
+            </div>
+        </footer>
+
+    </div> 
+
+    <!-- Back to Top Button -->
+    <button id="backToTop" onclick="scrollToTop()">Back to Top</button>
+
+    <script>
+        // Show the button when scrolling down 200px
+        window.onscroll = function () {
+            document.getElementById("backToTop").style.display = (document.documentElement.scrollTop > 200) ? "block" : "none";
+        };
+
+        // Scroll to the top of the page
+        function scrollToTop() {
+            window.scrollTo({ top: 0, behavior: "smooth" });
+        }
+    </script>
+
+</body>
+</html>
